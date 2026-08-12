@@ -13,11 +13,28 @@
   .card button:hover { background: #37527a; }
   .card button.ok { background: #15803d; border-color: #15803d; }
   .sig { padding: 20px 24px; background: #fff; overflow-x: auto; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; }
+  #themeToggle { border: 1px solid #cbd5e1; background: #fff; color: #1f2937; font-size: 13px; padding: 6px 14px; border-radius: 6px; cursor: pointer; }
+  body.dark { background: #14181d; }
+  body.dark h1 { color: #e5e7eb; }
+  body.dark #themeToggle { background: #1f242b; border-color: #3a4250; color: #e5e7eb; }
+  body.dark .card { background: #1b2026; border-color: #2b323c; }
+  body.dark .card header { background: #20262d; border-bottom-color: #2b323c; }
+  body.dark .card h2 { color: #9aa4b2; }
+  body.dark .sig { background: #1b2026; }
+  /* Simulate how dark-mode email clients invert signature text colors.
+     Preview only: the copy button grabs the untouched inline styles. */
+  body.dark .sig [style*="#222222"] { color: #e8eaed !important; }
+  body.dark .sig [style*="#000000"] { color: #e8eaed !important; }
+  body.dark .sig span[style*="#45668E"] { color: #8fafd9 !important; }
 </style>
 </head>
 <body>
 <div class="wrap">
+<div class="topbar">
 <h1>Techordia email signatures</h1>
+<button id="themeToggle" onclick="toggleTheme(this)">🌙 Dark preview</button>
+</div>
 
 <section class="card">
   <header>
@@ -469,6 +486,10 @@
 </section>
 </div>
 <script>
+function toggleTheme(btn) {
+  const dark = document.body.classList.toggle('dark');
+  btn.textContent = dark ? '☀️ Light preview' : '🌙 Dark preview';
+}
 async function copySig(id, btn) {
   const el = document.getElementById(id);
   const html = '<meta charset="utf-8">' + el.innerHTML;
